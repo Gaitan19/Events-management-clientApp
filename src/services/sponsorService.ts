@@ -9,7 +9,7 @@ export const SponsorService = {
   getSponsor: async (id: string) => {
     return await apiClient.get<Sponsor>(`/sponsor/${id}`);
   },
-  createSponsor: async (sponsor: Omit<Sponsor, 'id'>) => {
+   createSponsor: async (sponsor: Omit<Sponsor, 'id'>) => {
     return await apiClient.post('/sponsor', sponsor);
   },
   updateSponsor: async (id: string, sponsor: Partial<Sponsor>) => {

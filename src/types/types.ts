@@ -34,11 +34,13 @@ export interface Registration {
   eventId: string;
   participant?: Participant;
   event?: Event;
+  registrationDate?: string;
 }
 
 export interface Sponsor {
   id: string;
   name: string;
   description: string;
-  events?: Event[];
+  eventId: string;
+  event?: Event;
 }

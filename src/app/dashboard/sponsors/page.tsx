@@ -58,13 +58,17 @@ const SponsorsPage = () => {
 
   const columns = [
     { header: "Name", accessor: "name" },
-    { header: "Website", accessor: "website" },
-    { header: "Contribution Level", accessor: "contributionLevel" },
+    { header: "Description", accessor: "description" },
+    {
+      header: "Event",
+      accessor: "event",
+      render: (value: any, row: Sponsor) => row.event?.name || "N/A",
+    },
     {
       header: "Actions",
       accessor: "id",
       render: (id: string, row: Sponsor) => (
-        <div className="flex space-x-2">
+        <div className="flex space-x-3">
           <button
             onClick={() => {
               setSelectedSponsor(row);
