@@ -9,19 +9,25 @@ import Modal from "@/components/ui/Modal";
 import DataTable from "@/components/ui/DataTable";
 import ParticipantForm from "@/components/participants/ParticipantForm";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import Loading from '@/components/ui/Loading';
+
 
 const ParticipantsPage = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [selectedParticipant, setSelectedParticipant] =
     useState<Participant | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchParticipants = async () => {
+   const fetchParticipants = async () => {
     try {
+      setIsLoading(true); // Activamos el loading
       const response = await ParticipantService.getParticipants();
       setParticipants(response.data);
     } catch (error) {
       toast.error("Error fetching participants");
+    } finally {
+      setIsLoading(false); // Desactivamos el loading siempre
     }
   };
 
@@ -90,6 +96,8 @@ const ParticipantsPage = () => {
       ),
     },
   ];
+
+  if (isLoading) return <Loading text="Loading Participants" />;
 
   return (
     <div className="p-6">
