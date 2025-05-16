@@ -62,10 +62,15 @@ const EventsPage = () => {
     { header: "Location", accessor: "location" },
     { header: "Capacity", accessor: "maxCapacity" },
     {
+      header: "Organizer",
+      accessor: "organizer",
+      render: (value: any, row: Event) => row.organizer?.name || "N/A",
+    },
+    {
       header: "Actions",
       accessor: "id",
       render: (id: string, row: Event) => (
-        <div className="flex space-x-2">
+        <div className="flex space-x-3">
           <button
             onClick={() => {
               setSelectedEvent(row);
@@ -76,7 +81,6 @@ const EventsPage = () => {
             <PencilIcon className="w-5 h-5 opacity-70 hover:opacity-100" />
             <span>Edit</span>
           </button>
-
           <button
             onClick={() => handleDelete(id)}
             className="flex items-center px-3 py-2 space-x-2 text-red-600 transition-all duration-200 bg-red-50 rounded-lg hover:bg-red-100 hover:scale-105 dark:bg-red-900/20 dark:hover:bg-red-900/30 dark:text-red-400"
