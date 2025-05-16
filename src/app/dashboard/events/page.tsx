@@ -8,12 +8,17 @@ import { toast } from "react-hot-toast";
 import Modal from "@/components/ui/Modal";
 import EventForm from "@/components/events/EventForm";
 import DataTable from "@/components/ui/DataTable";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
+import EventDetailsModal from "@/components/events/EventDetailsModal";
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [selectedEventDetails, setSelectedEventDetails] =
+    useState<Event | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const fetchEvents = async () => {
     try {
@@ -88,6 +93,17 @@ const EventsPage = () => {
             <TrashIcon className="w-5 h-5 opacity-70 hover:opacity-100" />
             <span>Delete</span>
           </button>
+          <button
+            onClick={() => {
+              setSelectedEventDetails(row);
+              setIsDetailsModalOpen(true);
+            }}
+            className="flex items-center px-3 py-2 space-x-2 text-emerald-600 transition-all duration-200 bg-emerald-50 rounded-lg hover:bg-emerald-100 hover:scale-105 dark:bg-emerald-900/20 dark:hover:bg-emerald-900/30 dark:text-emerald-400"
+          >
+            <EyeIcon className="w-5 h-5 opacity-70 hover:opacity-100" />
+            <span>View</span>
+          </button>
+          {/* Botones existentes de Edit y Delete */}
         </div>
       ),
     },
@@ -127,6 +143,14 @@ const EventsPage = () => {
           onCancel={() => setIsModalOpen(false)}
         />
       </Modal>
+
+      <EventDetailsModal
+        event={selectedEventDetails}
+        onClose={() => {
+          setSelectedEventDetails(null);
+          setIsDetailsModalOpen(false);
+        }}
+      />
     </div>
   );
 };

@@ -34,6 +34,7 @@ export interface Registration {
   eventId: string;
   participant?: Participant;
   event?: Event;
+  registrationDate?: string;
 }
 
 export interface Sponsor {
