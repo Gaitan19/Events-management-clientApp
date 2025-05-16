@@ -9,18 +9,23 @@ import Modal from '@/components/ui/Modal';
 import DataTable from '@/components/ui/DataTable';
 import OrganizerForm from '@/components/organizers/OrganizerForm';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import Loading from '@/components/ui/Loading';
 
 const OrganizersPage = () => {
   const [organizers, setOrganizers] = useState<Organizer[]>([]);
   const [selectedOrganizer, setSelectedOrganizer] = useState<Organizer | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchOrganizers = async () => {
     try {
+      setIsLoading(true); // Iniciar loading
       const response = await OrganizerService.getOrganizers();
       setOrganizers(response.data);
     } catch (error) {
       toast.error('Error fetching organizers');
+    } finally {
+      setIsLoading(false); // Finalizar loading en cualquier caso
     }
   };
 
@@ -86,6 +91,8 @@ const OrganizersPage = () => {
       ),
     },
   ];
+
+   if (isLoading) return <Loading text="Loading Organizers" />;
 
   return (
     <div className="p-6">

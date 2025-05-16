@@ -9,18 +9,24 @@ import Modal from "@/components/ui/Modal";
 import DataTable from "@/components/ui/DataTable";
 import SponsorForm from "@/components/sponsors/SponsorForm";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import Loading from '@/components/ui/Loading';
+
 
 const SponsorsPage = () => {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [selectedSponsor, setSelectedSponsor] = useState<Sponsor | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchSponsors = async () => {
     try {
+      setIsLoading(true);
       const response = await SponsorService.getSponsors();
       setSponsors(response.data);
     } catch (error) {
       toast.error("Error fetching sponsors");
+    } finally {
+      setIsLoading(false); // Desactivamos el loading siempre
     }
   };
 
@@ -90,6 +96,8 @@ const SponsorsPage = () => {
       ),
     },
   ];
+
+  if (isLoading) return <Loading text="Loading Registrations Data" />;
 
   return (
     <div className="p-6">

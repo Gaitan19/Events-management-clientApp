@@ -10,22 +10,27 @@ import EventForm from "@/components/events/EventForm";
 import DataTable from "@/components/ui/DataTable";
 import { PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/outline";
 import EventDetailsModal from "@/components/events/EventDetailsModal";
+import Loading from "@/components/ui/Loading";
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [selectedEventDetails, setSelectedEventDetails] =
     useState<Event | null>(null);
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
-  const fetchEvents = async () => {
+   const fetchEvents = async () => {
     try {
+      setIsLoading(true); // Activar loading al iniciar
       const response = await EventService.getEvents();
       setEvents(response.data);
     } catch (error) {
       toast.error("Error fetching events");
+    } finally {
+      setIsLoading(false); // Desactivar loading al finalizar
     }
   };
 
@@ -108,6 +113,8 @@ const EventsPage = () => {
       ),
     },
   ];
+
+  if (isLoading) return <Loading text="Loading Events" />;
 
   return (
     <div className="p-6">

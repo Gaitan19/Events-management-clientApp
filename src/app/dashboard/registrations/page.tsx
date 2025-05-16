@@ -10,6 +10,7 @@ import DataTable from "@/components/ui/DataTable";
 import RegistrationForm from "@/components/registrations/RegistrationForm";
 import { EventService } from "@/services/eventService";
 import { ParticipantService } from "@/services/participantService";
+import Loading from '@/components/ui/Loading';
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const RegistrationsPage = () => {
@@ -19,9 +20,11 @@ const RegistrationsPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
   const [participants, setParticipants] = useState<Participant[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchData = async () => {
+   const fetchData = async () => {
     try {
+      setIsLoading(true); // Activamos el loading
       const [regRes, eventsRes, participantsRes] = await Promise.all([
         RegistrationService.getRegistrations(),
         EventService.getEvents(),
@@ -33,6 +36,8 @@ const RegistrationsPage = () => {
       setParticipants(participantsRes.data);
     } catch (error) {
       toast.error("Error fetching data");
+    } finally {
+      setIsLoading(false); // Desactivamos el loading siempre
     }
   };
 
@@ -108,6 +113,8 @@ const RegistrationsPage = () => {
       ),
     },
   ];
+
+  if (isLoading) return <Loading text="Loading Registrations Data" />;
 
   return (
     <div className="p-6">
