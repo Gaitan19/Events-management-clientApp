@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Events Management',
   description: 'Manage your events efficiently',
+  icons: '/events-icon.jpg',
 };
 
 export default function RootLayout({
