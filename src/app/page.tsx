@@ -6,7 +6,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br ">
       {/* Hero Section */}
       <div className="container mx-auto px-6 py-32 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text md:leading-normal text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text leading-normal sm:leading-normal md:leading-normal text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
           Transform Your Event Management
         </h1>
         
